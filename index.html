@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Prelim-Calculator</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            margin-top: 10px;
+            color: #34495e;
+        }
+
+        .entered_grades input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #2c3e50;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .result {
+            border: 2px solid #2c3e50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: rgba(52, 152, 219, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .result h1 {
+            font-size: 24px;
+            color: #2c3e50;
+        }
+
+        .result div {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #2c3e50;
+        }
+
+        .art {
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            color: #333;
+            text-align: center;
+            margin: 0;            
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Preliminary Grade Calculator</h1>
+        
+        <label for="absent">Enter Absences</label>
+        <div class="absent entered_grades">
+            <input type="number" id="absent" min="0" max="100" placeholder="(0-10)">
+        </div>
+
+        <label for="exam">Enter Preliminary Exam Grade</label>
+        <div class="exam entered_grades">
+            <input type="number" id="exam" min="0" max="100" placeholder="(0-100)">
+        </div>
+
+        <label for="quiz">Enter Quiz Grade</label>
+        <div class="quiz entered_grades">
+            <input type="number" id="quiz" min="0" max="100" placeholder="(0-100)">
+        </div>
+
+        <label for="req">Enter Requirement Grade</label>
+        <div class="req entered_grades">
+            <input type="number" id="req" min="0" max="100" placeholder="(0-100)">
+        </div>
+
+        <label for="recit">Enter Recitation Grade</label>
+        <div class="recit entered_grades">
+            <input type="number" id="rec" min="0" max="100" placeholder="(0-100)">
+        </div>
+
+        <button id="calculate" type="button">Calculate</button>
+
+        <div class="result">
+            <div id="required-pass"></div>
+            <div id="required-honors"></div>
+            <div id="fail" class="fail"></div>
+        </div>
+    </div>
+
+    <div class="art">
+        <pre>
+     ▄▄▄▄▄ ▄███▄   █▄▄▄▄ █▀▄▀█ ▄█ ▄███▄      ▄   ▄███▄       ▄███▄   █      ▄▀  ▄█    ▄       █▀▄▀█ ██     ▄▄▄▄▀ ▄▄▄▄▀ ▄  █ ▄███▄     ▄ ▄   
+    ▄▀  █   █▀   ▀  █  ▄▀ █ █ █ ██ █▀   ▀      █  █▀   ▀      █▀   ▀  █    ▄▀    ██     █      █ █ █ █ █ ▀▀▀ █ ▀▀▀ █   █   █ █▀   ▀   █   █  
+        █   ██▄▄    █▀▀▌  █ ▄ █ ██ ██▄▄    ██   █ ██▄▄        ██▄▄    █    █ ▀▄  ██ ██   █     █ ▄ █ █▄▄█    █     █   ██▀▀█ ██▄▄    █ ▄   █ 
+     ▄ █    █▄   ▄▀ █  █  █   █ ▐█ █▄   ▄▀ █ █  █ █▄   ▄▀     █▄   ▄▀ ███▄ █   █ ▐█ █ █  █     █   █ █  █   █     █    █   █ █▄   ▄▀ █  █  █ 
+      ▀     ▀███▀     █      █   ▐ ▀███▀   █  █ █ ▀███▀       ▀███▀       ▀ ███   ▐ █  █ █        █     █  ▀     ▀        █  ▀███▀    █ █ █  
+                     ▀      ▀              █   ██                                   █   ██       ▀     █                 ▀             ▀ ▀   
+        </pre>
+    </div>
+    
+    
+    
+    <py-script>
+        from js import document
+
+        #Weights
+        absent_weight = 0.10
+        exam_weight = 0.60
+        class_standing_weight = 0.30
+    
+        quiz_weight = 0.40
+        req_weight = 0.30
+        rec_weight = 0.30
+    
+        prelim_weight = 0.20
+        midterm_weight = 0.30
+        finals_weight = 0.50
+    
+        passing_grade = 75
+        honors_grade = 90
+
+        #Function to calculate grades
+        def calculate():
+            errors = []
+            absences = int(document.getElementById('absent').value)
+            if not (0 <= absences <= 10):
+             errors.append("Absences must be between 0 and 10.")
+            elif absences >=4:
+             errors.append("You failed due to excessive absences.")
+
+            exam_grade = float(document.getElementById('exam').value)
+            if not (0 <= exam_grade <= 100):
+             errors.append("Exam grade must be between 0 and 100.")
+
+            quiz_grade = float(document.getElementById('quiz').value)
+            if not (0 <= quiz_grade <= 100):
+
+             errors.append("Quiz grade must be between 0 and 100.")
+            req_grade = float(document.getElementById('req').value)
+            if not (0 <= req_grade <= 100):
+             errors.append("Requirement grade must be between 0 and 100.")
+
+            rec_grade = float(document.getElementById('rec').value)
+            if not (0 <= rec_grade <= 100):
+             errors.append("Recitation grade must be between 0 and 100.")
+
+            if errors:
+             document.getElementById('fail').innerHTML = "<br>".join(errors)
+             document.getElementById('fail').style.visibility = 'visible'
+             return
+            else:
+             document.getElementById('fail').style.visibility = 'hidden'
+                       
+            calculated_absences = 100 - (10 * absences)
+            weighted_absences = calculated_absences * absent_weight
+
+            weighted_exam = exam_grade * exam_weight
+
+            weighted_quiz = quiz_grade * quiz_weight
+
+            weighted_req = req_grade * req_weight
+    
+            weighted_rec = rec_grade * rec_weight
+    
+            class_standing = weighted_quiz + weighted_req + weighted_rec
+            weighted_class_standing = class_standing * class_standing_weight
+    
+            prelim_grade = weighted_absences + weighted_exam + weighted_class_standing
+
+            calculated_passing = passing_grade - (prelim_grade * prelim_weight)
+            required_passing = calculated_passing / (midterm_weight + finals_weight)
+            passing_message = f"With a preliminary grade of <strong>{prelim_grade:.2f}</strong>, you need to achieve at least <strong>{required_passing:.2f}</strong> in both the Midterms and Finals to secure an overall grade of 75."
+            document.getElementById('required-pass').innerHTML = passing_message
+            
+            calculated_honors = honors_grade - (prelim_grade * prelim_weight)
+            required_honors = calculated_honors / (midterm_weight + finals_weight)
+
+            if required_honors > 100:
+                honors_message = f"Unfortunately, based on your preliminary grade of <strong>{prelim_grade:.2f}</strong>, it is not possible to achieve an overall grade of 90 (Dean's Lister)."
+            else:
+                honors_message = f"With a preliminary grade of <strong>{prelim_grade:.2f}</strong>, you must achieve at least <strong>{required_honors:.2f}</strong> in both the Midterms and Finals to reach an overall grade of 90 (Dean's Lister)."
+            document.getElementById('required-honors').innerHTML = honors_message
+        
+        #Function for button
+        def on_button_click(event):
+            calculate()
+    
+        document.getElementById('calculate').onclick = on_button_click
+    </py-script>
+    <script>
+        //To only allow numbers
+        function filterInput(event) {
+            event.target.value = event.target.value.replace(/[^0-9]/g, '');
+        }
+        
+        const inputFields = ['absent', 'exam', 'quiz', 'req', 'rec'];
+        inputFields.forEach(field => {
+            document.getElementById(field).addEventListener('input', filterInput);
+        });
+
+        //To show failure message
+        function showFailMessage(message) {
+            const failElement = document.getElementById('fail');
+            failElement.innerHTML = message;
+            failElement.style.visibility = 'visible';
+            failElement.style.color = 'red';
+            failElement.style.fontSize = '25px';
+        }
+
+        //To check if 4 or more absences.
+        function checkAbsent() {
+            const absentValue = document.getElementById('absent').value;
+            const failElement = document.getElementById('fail');
+            
+            if (absentValue >= 4) {
+                showFailMessage("You failed due to excessive absences");                
+            } else {
+                failElement.style.visibility = 'hidden';
+                failElement.innerHTML = "";
+            }
+        }
+        document.getElementById('absent').addEventListener('input', checkAbsent);
+    </script>
+</body>
+</html>
